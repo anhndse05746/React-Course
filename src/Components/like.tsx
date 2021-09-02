@@ -7,7 +7,7 @@ export interface LikeProps {
 
 const Like: React.FC<LikeProps> = ({ like, onClick }) => {
   let text = "fa fa-heart";
-  const getIcon = (like: boolean) => (like === true ? (text += "-o") : text);
+  const getIcon = (like: boolean) => (like === true ? text : (text += "-o"));
   return (
     <i
       onClick={onClick}
