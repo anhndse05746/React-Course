@@ -7,21 +7,23 @@ export interface MovieTableProps {
   movies: movie[];
   onDelete: (movie: movie) => void;
   onLike: (movie: movie) => void;
+  onSort: (path: string) => void;
 }
 
 const MovieTable: React.FC<MovieTableProps> = ({
   movies,
   onDelete,
   onLike,
+  onSort,
 }) => {
   return (
     <table className="table">
       <thead>
         <tr>
-          <th>Title</th>
-          <th>Genre</th>
-          <th>Stock</th>
-          <th>Rate</th>
+          <th onClick={() => onSort("title")}>Title</th>
+          <th onClick={() => onSort("genre.name")}>Genre</th>
+          <th onClick={() => onSort("numberInStock")}>Stock</th>
+          <th onClick={() => onSort("dailyRate")}>Rate</th>
           <th></th>
           <th></th>
         </tr>
