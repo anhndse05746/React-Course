@@ -5,12 +5,12 @@ import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
 import App from "./App";
 import "font-awesome/css/font-awesome.css";
-import MovieTable from "./Components/movieTable";
+import Movies from "./Components/movies";
 
 ReactDOM.render(
   <React.StrictMode>
     <main className="container">
-      <MovieTable />
+      <Movies />
       {/* <App /> */}
     </main>
   </React.StrictMode>,

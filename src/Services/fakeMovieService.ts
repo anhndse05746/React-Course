@@ -1,3 +1,5 @@
+import { Genre } from "./fakeGenreService";
+
 const movies = [
   {
     _id: "1",
@@ -38,7 +40,7 @@ const movies = [
   {
     _id: "5",
     title: "WandaVision",
-    genre: { _id: "1", name: "Action" },
+    genre: { _id: "2", name: "Comedy" },
     numberInStock: 6,
     dailyRate: 2.5,
     like: false,
@@ -49,7 +51,7 @@ const movies = [
 export interface movie {
   _id: string;
   title: string;
-  genre: { _id: string; name: string };
+  genre: Genre;
   numberInStock: number;
   dailyRate: number;
   like: boolean;
