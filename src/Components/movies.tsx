@@ -1,22 +1,27 @@
 import React from "react";
 import { getMovie, movie } from "../Services/fakeMovieService";
 import { useState, useEffect } from "react";
+import _ from "lodash";
 
 import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import { Genre, getGenres } from "../Services/fakeGenreService";
 import ListGroup from "./common/listGroup";
-import _ from "lodash";
 import MovieTable from "./movieTable";
+import { SortColumn } from "./common/tableHeader";
 
 export interface MoviesProps {}
 
-const Movies: React.FC<MoviesProps> = ({}) => {
+const Movies: React.FC<MoviesProps> = () => {
   let [movieList, setMovieList] = useState<movie[]>([]);
   let [movieCounter, setMovieCounter] = useState(0);
   let [currentPage, setCurrenPage] = useState(1);
-  let [genreList, setGenreList] = React.useState<Genre[]>([]);
-  let [selectedGenre, setSelectedGenre] = React.useState<Genre | null>(null);
+  let [genreList, setGenreList] = useState<Genre[]>([]);
+  let [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
+  let [sortColumn, setSortColumn] = useState<SortColumn>({
+    path: "title",
+    order: "asc",
+  });
 
   let handleGenreSelected = (genre: Genre) => {
     setSelectedGenre(genre);
@@ -50,7 +55,9 @@ const Movies: React.FC<MoviesProps> = ({}) => {
     setCurrenPage(i);
   };
 
-  const handleSort = (path: string) => {};
+  const handleSort = (sortColumn: SortColumn) => {
+    setSortColumn(sortColumn);
+  };
 
   if (movieCounter === 0) {
     return (
@@ -74,7 +81,9 @@ const Movies: React.FC<MoviesProps> = ({}) => {
       ? movieList.filter((m) => _.isEqual(m.genre, selectedGenre))
       : movieList;
 
-  const movies = paginate(filtered, PAGE_SIZE, currentPage);
+  const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+
+  const movies = paginate(sorted, PAGE_SIZE, currentPage);
 
   return (
     <div className="row">
@@ -90,6 +99,7 @@ const Movies: React.FC<MoviesProps> = ({}) => {
 
         <MovieTable
           movies={movies}
+          sortColumn={sortColumn}
           onLike={handleLike}
           onDelete={handleDelete}
           onSort={handleSort}

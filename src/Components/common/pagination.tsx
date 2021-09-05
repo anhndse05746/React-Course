@@ -29,11 +29,9 @@ const Pagination: React.FC<PaginationProps> = ({
           <li
             onClick={() => onClick(i)}
             key={i}
-            className={getPageItemClass(i)}
+            className={getPageItemClass(i) + " clickable"}
           >
-            <a className="page-link" href="#">
-              {i}
-            </a>
+            <span className="page-link">{i}</span>
           </li>
         ))}
       </ul>

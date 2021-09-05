@@ -25,8 +25,7 @@ const ListGroup: React.FC<ListGroupProps> = ({
         <li
           onClick={() => onItemSelect(item)}
           key={item[valueProperty]}
-          className={getItemClass(item)}
-          style={{ cursor: "pointer" }}
+          className={getItemClass(item) + " clickable"}
         >
           {item[textProperty]}
         </li>

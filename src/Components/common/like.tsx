@@ -11,8 +11,7 @@ const Like: React.FC<LikeProps> = ({ like, onClick }) => {
   return (
     <i
       onClick={onClick}
-      className={getIcon(like)}
-      style={{ cursor: "pointer" }}
+      className={getIcon(like) + " clickable"}
       aria-hidden="true"
     ></i>
   );
