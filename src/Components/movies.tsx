@@ -22,13 +22,12 @@ const Movies: React.FC<MoviesProps> = () => {
     path: "title",
     order: "asc",
   });
+  const PAGE_SIZE: number = 3;
 
   let handleGenreSelected = (genre: Genre) => {
     setSelectedGenre(genre);
     setCurrenPage(1);
   };
-
-  const PAGE_SIZE: number = 3;
 
   useEffect(() => {
     const allMovie = getMovie();
@@ -76,14 +75,20 @@ const Movies: React.FC<MoviesProps> = () => {
     );
   }
 
-  const filtered =
-    selectedGenre && selectedGenre._id
-      ? movieList.filter((m) => _.isEqual(m.genre, selectedGenre))
-      : movieList;
+  const getPageData = (): { totalCount: number; movies: movie[] } => {
+    const filtered =
+      selectedGenre && selectedGenre._id
+        ? movieList.filter((m) => _.isEqual(m.genre, selectedGenre))
+        : movieList;
 
-  const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
-  const movies = paginate(sorted, PAGE_SIZE, currentPage);
+    const movies = paginate(sorted, PAGE_SIZE, currentPage);
+
+    return { totalCount: filtered.length, movies: movies };
+  };
+
+  const { totalCount, movies } = getPageData();
 
   return (
     <div className="row">
@@ -95,7 +100,7 @@ const Movies: React.FC<MoviesProps> = () => {
         />
       </div>
       <div className="col">
-        <h3>Showing {filtered.length} movies in the database</h3>
+        <h3>Showing {totalCount} movies in the database</h3>
 
         <MovieTable
           movies={movies}
@@ -106,7 +111,7 @@ const Movies: React.FC<MoviesProps> = () => {
         />
 
         <Pagination
-          itemCount={filtered.length}
+          itemCount={totalCount}
           pageSize={PAGE_SIZE}
           currentPage={currentPage}
           onClick={handlePageChange}

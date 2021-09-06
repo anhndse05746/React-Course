@@ -2,8 +2,8 @@ import React from "react";
 import { movie } from "../Services/fakeMovieService";
 
 import Like from "./common/like";
-import TableBody from "./common/tableBody";
-import TableHeader, { Column, SortColumn } from "./common/tableHeader";
+import Table from "./common/table";
+import { Column, SortColumn } from "./common/tableHeader";
 
 export interface MovieTableProps {
   movies: movie[];
@@ -45,22 +45,12 @@ const MovieTable: React.FC<MovieTableProps> = ({
   ];
 
   return (
-    <table className="table">
-      <TableHeader columns={columns} sortColumn={sortColumn} onSort={onSort} />
-      <TableBody data={movies} columns={columns} />
-      {/* <tbody>
-        {movies.map((movie) => (
-          <tr key={movie._id}>
-            <td>{movie.title}</td>
-            <td>{movie.genre.name}</td>
-            <td>{movie.numberInStock}</td>
-            <td>{movie.dailyRate}</td>
-            <td></td>
-            <td></td>
-          </tr>
-        ))}
-      </tbody> */}
-    </table>
+    <Table
+      data={movies}
+      collumns={columns}
+      onSort={onSort}
+      sortColumn={sortColumn}
+    />
   );
 };
 
