@@ -5,14 +5,18 @@ import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
 // import App from "./App";
 import "font-awesome/css/font-awesome.css";
-import Movies from "./Components/movies";
+import Movies from "./Components/movie/movies";
+import { BrowserRouter } from "react-router-dom";
+import Home from "./Components/home";
 
 ReactDOM.render(
   <React.StrictMode>
-    <main className="container">
-      <Movies />
-      {/* <App /> */}
-    </main>
+    <BrowserRouter>
+      <main className="container">
+        <Home />
+        {/* <App /> */}
+      </main>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

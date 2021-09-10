@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Counters from "./Components/counters";
-import NavBar from "./Components/navBar";
-import { counter } from "./Components/counter";
+import Counters from "./Components/counter/counters";
+import NavBar from "./Components/counter/navBar";
+import { counter } from "./Components/counter/counter";
 
 export interface AppProps {}
 
