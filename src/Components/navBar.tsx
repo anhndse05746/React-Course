@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 interface NavBarProps {}
 
@@ -7,9 +7,9 @@ const NavBar: React.FC<NavBarProps> = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <Link className="navbar-brand" to="/">
           Vidly
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -36,6 +36,11 @@ const NavBar: React.FC<NavBarProps> = () => {
             <li className="nav-item">
               <NavLink to="/rentals" className="nav-link">
                 Rentals
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to="/login" className="nav-link">
+                Login
               </NavLink>
             </li>
           </ul>
