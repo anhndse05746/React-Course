@@ -1,82 +1,60 @@
-import React, { FormEvent, useState } from "react";
+import Joi from "joi";
+import Form from "./common/form";
 import Input from "./common/input";
 
 interface LoginFormProps {}
 
-interface Account {
-  username: string;
-  password: string;
+interface LoginFormState {
+  data: { username: ""; password: "" };
+  errors: {} | { username: ""; password: "" };
+}
+// define type of state for a specific form
+
+class LoginForm extends Form<LoginFormProps, LoginFormState> {
+  state = {
+    data: { username: "", password: "" },
+    errors: {},
+  };
+
+  schema = Joi.object().keys({
+    username: Joi.string().required().label("Username"),
+    password: Joi.string().required().label("Password").alphanum(),
+  });
+
+  doSubmit = () => {
+    console.log("Submited");
+  };
+
+  render() {
+    const { data, errors } = this.state;
+    return (
+      <div>
+        <h1>Login</h1>
+        <form action="" onSubmit={this.handleSubmit}>
+          <Input
+            name="username"
+            label="Username"
+            error={errors}
+            value={data.username}
+            onChange={this.handleChange}
+          />
+          <Input
+            name="password"
+            label="Password"
+            error={errors}
+            value={data.password}
+            onChange={this.handleChange}
+          />
+          <button
+            disabled={this.validate() ? true : false}
+            className="btn btn-primary my-2"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    );
+  }
 }
 
-const LoginForm: React.FC<LoginFormProps> = () => {
-  let [account, setAccount] = useState<Account>({ username: "", password: "" });
-  let [errors, setErrors] = useState<Account | {}>({});
-
-  const validate = (account: Account) => {
-    const { username, password } = account;
-    let errors = { username: "", password: "" };
-
-    if (username.trim() === "") {
-      errors.username = `username cannot be empty`;
-    }
-    if (password.trim() === "") {
-      errors.password = `password cannot be empty`;
-    }
-
-    return errors.username === "" && errors.password === "" ? null : errors;
-  };
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    const errorResult = validate(account);
-    setErrors(errorResult || {});
-
-    if (errorResult) return;
-
-    //submit the form
-    console.log("submitted");
-  };
-
-  const validateProperty = (name: "username" | "password", value: string) => {
-    let error = { ...errors };
-
-    if (value.trim() === "") error[name] = `${name} cannot be empty`;
-    else error[name] = "";
-    setErrors(error);
-  };
-
-  const handleChange = (e: FormEvent<HTMLInputElement>) => {
-    const { name, value } = e.currentTarget;
-
-    let updateAcc: Account = { ...account };
-    updateAcc[name as "username" | "password"] = value;
-    setAccount(updateAcc);
-
-    validateProperty(name as "username" | "password", value);
-  };
-
-  return (
-    <div>
-      <h1>Login</h1>
-      <form action="" onSubmit={handleSubmit}>
-        <Input
-          name="username"
-          label="Username"
-          error={errors}
-          value={account.username}
-          onChange={handleChange}
-        />
-        <Input
-          name="password"
-          label="Password"
-          error={errors}
-          value={account.password}
-          onChange={handleChange}
-        />
-        <button className="btn btn-primary my-2">Save</button>
-      </form>
-    </div>
-  );
-};
 export default LoginForm;
